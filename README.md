@@ -2,6 +2,7 @@
 
 # Prérequis
 
+python 3.11.2
 npm
 node.js
 haproxy

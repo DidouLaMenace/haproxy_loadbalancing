@@ -6,6 +6,8 @@ services:
     ports:
       - "3001:3001"
       - "3002:3002"
+    networks:
+      - haproxy_network
 
   haproxy:
     image: haproxy:latest
@@ -16,3 +18,9 @@ services:
       - "8081:8081"
     depends_on:
       - server_node
+    networks:
+      - haproxy_network
+
+networks:
+  haproxy_network:
+    driver: bridge
