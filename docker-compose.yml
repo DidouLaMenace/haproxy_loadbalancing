@@ -1,24 +1,32 @@
 services:
   server1:
-    build: ./servers
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: ["node", "server1.js"]
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app/frontend
     networks:
       - haproxy_network
 
   server2:
-    build: ./servers
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: ["node", "server2.js"]
     ports:
       - "3001:3001"
+    volumes:
+      - ./frontend:/app/frontend
     networks:
       - haproxy_network
 
   haproxy:
-    build: ./config  # Utiliser le Dockerfile dans "config/"
+    build: ./backend/config  # Utiliser le Dockerfile dans "config/"
     volumes:
-      - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./backend/config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
       - "8080:8080"
       - "8404:8404"  # Interface stats
@@ -27,7 +35,6 @@ services:
       - server2
     networks:
       - haproxy_network
-
 
 networks:
   haproxy_network:

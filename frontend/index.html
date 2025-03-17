@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Hash</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Générateur de Hash</h1>
+
+        <label for="text">Texte à hacher :</label>
+        <input type="text" id="text" placeholder="Entrez votre texte ici">
+
+        <label for="algorithm">Choisissez un algorithme :</label>
+        <select id="algorithm">
+            <option value="md5">MD5</option>
+            <option value="sha256">SHA-256</option>
+            <option value="sha512">SHA-512</option>
+        </select>
+
+        <button onclick="generateHash()">Générer le Hash</button>
+
+        <h2>Résultat :</h2>
+        <p id="hashTitle">Aucun hash généré</p> <!-- Ajout du titre -->
+        <div class="result-container">
+            <textarea id="result" readonly>En attente...</textarea>
+            <button id="copyBtn" onclick="copyHash()">📋 Copier</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
