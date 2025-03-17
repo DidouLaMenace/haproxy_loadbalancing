@@ -1,0 +1,34 @@
+services:
+  server1:
+    build: ./servers
+    command: ["node", "server1.js"]
+    ports:
+      - "3000:3000"
+    networks:
+      - haproxy_network
+
+  server2:
+    build: ./servers
+    command: ["node", "server2.js"]
+    ports:
+      - "3001:3001"
+    networks:
+      - haproxy_network
+
+  haproxy:
+    build: ./config  # Utiliser le Dockerfile dans "config/"
+    volumes:
+      - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "8080:8080"
+      - "8404:8404"  # Interface stats
+    depends_on:
+      - server1
+      - server2
+    networks:
+      - haproxy_network
+
+
+networks:
+  haproxy_network:
+    driver: bridge
