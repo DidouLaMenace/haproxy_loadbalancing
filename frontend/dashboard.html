@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-dashboard">
+        <h1>Statistiques du Serveur</h1>
+        <p><strong>Nombre de requêtes :</strong> <span id="requestCount">0</span></p>
+        <p><strong>Latence moyenne :</strong> <span id="avgLatency">0</span> ms</p>
+
+        <h2>Simuler une Charge</h2>
+        <label for="requests">Nombre de requêtes :</label>
+        <input class="input-dashboard" type="number" id="requests" value="10">
+
+        <label for="duration">Durée d'envoi (ms) :</label>
+        <input class="input-dashboard" type="number" id="duration" value="5000">
+
+        <button class="button-dashboard" onclick="simulateLoad()">Lancer la Simulation</button>
+
+        <h2>Graphique d'Évolution</h2>
+        <canvas class="canvas-dashboard" id="statsChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

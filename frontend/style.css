@@ -91,3 +91,31 @@ textarea {
         max-width: 90%;
     }
 }
+
+/* Style Dashboard */
+.container-dashboard {
+    max-width: 500px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.input-dashboard {
+    margin: 10px;
+    padding: 8px;
+    width: 90%;
+}
+
+.button-dashboard {
+    margin: 10px;
+    padding: 8px;
+    width: 90%;
+}
+
+.canvas-dashboard {
+    max-width: 100%;
+    margin-top: 20px;
+}
