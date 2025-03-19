@@ -45,7 +45,7 @@ Git installé pour cloner le projet.
 ### Utiliser l'application depuis Docker Desktop
 
 ```bash
-docker run -d -p 8080:8080 -p 8404:8404 ton_nom_utilisateur/haproxy_loadbalancing:latest
+docker run -d -p 8080:8080 -p 8404:8404 didoulamenace/haproxy_loadbalancing:latest
 ```
 
 ### Utiliser l'application en local
