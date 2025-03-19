@@ -28,9 +28,7 @@ Express.js : Gestion des API
 
 HAProxy : Load Balancer
 
-Docker & Docker Compose : Conteneurisation
-
-Chart.js : Affichage du graphique des latences
+Docker : Conteneurisation
 
 JavaScript, HTML, CSS (Frontend) : Interface utilisateur
 
@@ -46,15 +44,24 @@ Git installé pour cloner le projet.
 
 1. Cloner le projet
 
+```bash
 git clone https://github.com/DidouLaMenace/haproxy_loadbalancing.git
 cd haproxy_loadbalancing
+```
 
+2. Build le container Docker
 
-2. Lancer les conteneurs Docker
+```bash
+docker build -t haproxy_loadbalancing .
+```
 
-python3 app.py
+3. Lancer l'application 
 
-3️. Accéder à l'application
+```bash
+docker run -d --name haproxy_test -p 8080:8080 -p 8404:8404 haproxy_loadbalancing
+```
+
+4. Accéder à l'application
 
 Ouvrir http://localhost:8080 pour lancer l'application.
 
