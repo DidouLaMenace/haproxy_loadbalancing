@@ -32,7 +32,7 @@ Docker : Conteneurisation
 
 JavaScript, HTML, CSS (Frontend) : Interface utilisateur
 
-# Prérequis
+## Prérequis
 
 Docker installé sur votre machine.
 
@@ -40,34 +40,43 @@ Si vous utilisez Windows, Docker Desktop doit être installé et en cours d’ex
 
 Git installé pour cloner le projet.
 
-## Installation et Exécution
+## Installation
 
-1. Cloner le projet
+### Utiliser l'application depuis Docker Desktop
+
+```bash
+docker run -d -p 8080:8080 -p 8404:8404 ton_nom_utilisateur/haproxy_loadbalancing:latest
+```
+
+### Utiliser l'application en local
+
+#### 1. Cloner le projet
 
 ```bash
 git clone https://github.com/DidouLaMenace/haproxy_loadbalancing.git
 cd haproxy_loadbalancing
 ```
 
-2. Build le container Docker
+#### 2. Build le container Docker
 
 ```bash
 docker build -t haproxy_loadbalancing .
 ```
 
-3. Lancer l'application 
+#### 3. Lancer l'application 
 
 ```bash
 docker run -d --name haproxy_test -p 8080:8080 -p 8404:8404 haproxy_loadbalancing
 ```
 
-4. Accéder à l'application
+## Accéder à l'application
 
 Ouvrir http://localhost:8080 pour lancer l'application.
 
 Ouvrir http://localhost:8080/dashboard pour lancer la simulation.
 
 Ouvrir http://localhost:8404/stats pour voir les statistiques HAProxy.
+
 
 ## Personnalisation
 
