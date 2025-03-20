@@ -42,7 +42,7 @@ Git installé pour cloner le projet.
 
 ## Installation
 
-### Utiliser l'application depuis Docker Desktop
+### Utiliser l'application depuis DockerHub
 
 ```bash
 docker run -d -p 8080:8080 -p 8404:8404 didoulamenace/haproxy_loadbalancing:latest
