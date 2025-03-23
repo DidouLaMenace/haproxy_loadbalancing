@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container-dashboard">
@@ -14,18 +13,194 @@
 
         <h2>Simuler une Charge</h2>
         <label for="requests">Nombre de requêtes :</label>
-        <input class="input-dashboard" type="number" id="requests" value="10">
+        <input class="input-dashboard" type="number" id="requests" value="1000">
 
         <label for="duration">Durée d'envoi (ms) :</label>
-        <input class="input-dashboard" type="number" id="duration" value="5000">
+        <input class="input-dashboard" type="number" id="duration" value="1000">
 
         <button class="button-dashboard" onclick="simulateLoad()">Lancer la Simulation</button>
 
-        <h2>Graphique d'Évolution</h2>
-        <canvas class="canvas-dashboard" id="statsChart"></canvas>
+        <!-- <h2>Graphique d'Évolution</h2>
+        <canvas class="canvas-dashboard" id="statsChart"></canvas> -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="dashboard.js"></script>
+    <script>
+        const ctx = document.getElementById("statsChart").getContext("2d");
+
+        // Graphique pour suivre l'évolution des requêtes
+        const statsChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [
+                    { label: "Requêtes", data: [], borderColor: "blue", fill: false },
+                    { label: "Latence moyenne (ms)", data: [], borderColor: "red", fill: false }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Met à jour les statistiques toutes les 2 secondes
+        async function updateStats() {
+            const response = await fetch("http://localhost:8080/stats");
+            const data = await response.json();
+
+            document.getElementById("requestCount").innerText = data.requestCount;
+            document.getElementById("avgLatency").innerText = data.avgLatency;
+
+            // Ajoute des données au graphique
+            statsChart.data.labels.push(new Date().toLocaleTimeString());
+            statsChart.data.datasets[0].data.push(data.requestCount);
+            statsChart.data.datasets[1].data.push(data.avgLatency);
+
+            statsChart.update();
+        }
+
+        // Simule une charge
+        async function simulateLoad() {
+            const requests = document.getElementById("requests").value;
+            const duration = document.getElementById("duration").value;
+
+            await fetch("http://localhost:8080/simulate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ requests, duration })
+            });
+
+            alert(`Simulation lancée: ${requests} requêtes sur ${duration} ms.`);
+        }
+
+        // Rafraîchir les stats automatiquement
+        setInterval(updateStats, 2000);
+    </script>
+
+<style>/* Style global */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    /* Container principal */
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Input et select */
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    /* Bouton principal */
+    button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    
+    button:hover {
+        background: #0056b3;
+    }
+    
+    /* Conteneur du résultat */
+    .result-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    
+    /* Titre du hash */
+    #hashTitle {
+        font-weight: bold;
+        margin-top: 15px;
+        color: #333;
+    }
+    
+    /* Champ résultat (hash) */
+    textarea {
+        width: 100%;
+        height: 50px;
+        resize: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+    }
+    
+    /* Bouton Copier */
+    #copyBtn {
+        background: #28a745;
+        padding: 10px;
+        width: auto;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    
+    #copyBtn:hover {
+        background: #218838;
+    }
+    
+    /* Responsive : Ajustement pour petits écrans */
+    @media (max-width: 500px) {
+        .container {
+            max-width: 90%;
+        }
+    }
+    
+    /* Style Dashboard */
+    .container-dashboard {
+        max-width: 500px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+    
+    .input-dashboard {
+        margin: 10px;
+        padding: 8px;
+        width: 90%;
+    }
+    
+    .button-dashboard {
+        margin: 10px;
+        padding: 8px;
+        width: 90%;
+    }
+    
+    .canvas-dashboard {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+    </style>
 </body>
 </html>

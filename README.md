@@ -78,10 +78,25 @@ Ouvrir http://localhost:8080/dashboard pour lancer la simulation.
 Ouvrir http://localhost:8404/stats pour voir les statistiques HAProxy.
 
 
+## Lancer la simulation de requêtes via Python
+
+1. Lancer Docker bash
+```bash
+docker exec -it haproxy_test bash
+```
+
+2. Activer l'environnement python
+```bash
+source /app/venv/bin/activate
+```
+
+3. Exécuter le code Python
+```bash
+python /app/src/request/request_progressive.py
+```
+
 ## Personnalisation
 
 Modifier haproxy.cfg pour ajuster les paramètres du load balancer.
-
-Modifier dashboard.js pour adapter la cadence d'envoi des requêtes.
 
 Modifier server1.js et server2.js pour tester différents comportements serveur.

@@ -33,12 +33,11 @@ COPY config/haproxy.cfg /etc/haproxy/haproxy.cfg
 
 # Copie des scripts Python et installation des dépendances
 COPY src/request /app/src/request/
-COPY requirements.txt /app/requirements.txt
 
 # Création et activation d'un environnement virtuel Python
 RUN python3 -m venv /app/venv
 RUN /app/venv/bin/pip install --upgrade pip
-RUN /app/venv/bin/pip install -r /app/requirements.txt
+RUN /app/venv/bin/pip install -r /app/src/request/requirements.txt
 
 # Copie du script d'entrée et attribution des permissions
 COPY entrypoint.sh /entrypoint.sh
