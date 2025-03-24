@@ -62,22 +62,24 @@
             statsChart.update();
         }
 
-        // Simule une charge
         async function simulateLoad() {
-            const requests = document.getElementById("requests").value;
-            const duration = document.getElementById("duration").value;
+            const requests = Number(document.getElementById("requests").value);
 
-            await fetch("http://localhost:8080/simulate", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ requests, duration })
-            });
+            const promises = [];
+            for (let i = 0; i < requests; i++) {
+                promises.push(fetch("http://localhost:8080/hash", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: "test", algorithm: "sha256" })
+                }));
+            }
 
-            alert(`Simulation lancée: ${requests} requêtes sur ${duration} ms.`);
+            await Promise.all(promises);
+            alert("Simulation terminée !");
         }
 
         // Rafraîchir les stats automatiquement
-        setInterval(updateStats, 2000);
+        setInterval(updateStats, 10000);
     </script>
 
 <style>/* Style global */
